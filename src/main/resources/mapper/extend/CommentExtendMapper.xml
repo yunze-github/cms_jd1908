@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.apps.cms.dao.extend.CommentExtendMapper">
+
+    <!--查看所有评论以及评论的回复-->
+    <resultMap id="CommentWithCommentResultMap" type="com.briup.apps.cms.bean.extend.CommentExtend"
+               extends="com.briup.apps.cms.dao.CommentMapper.ResultMapWithBLOBs">
+      <association property="user" resultMap="com.briup.apps.cms.dao.UserMapper.BaseResultMap"></association>
+      <collection property="commentExtends" resultMap="CommentWithCommentResultMap"></collection>
+    </resultMap>
+
+  <!--评论分页查询-->
+
+    <!--根据博客id查询评论-->
+    <select id="selectCommentsByArticleId" parameterType="long" resultMap="CommentWithCommentResultMap">
+        select com1.id,com1.content,com2.content
+        from cms_comment com1,cms_comment com2
+        where com1.id = com2.id
+            and com1.articleId = #{articleId}
+    </select>
+
+    <!--删除评论以及评论回复-->
+
+
+</mapper>
