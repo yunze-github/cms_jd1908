@@ -29,7 +29,7 @@ public class ArticleExtend extends Article {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(Category categoryExtend) {
         this.category = category;
     }
 

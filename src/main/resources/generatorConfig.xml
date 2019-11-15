@@ -41,12 +41,12 @@
 
 	<!-- 映射配置 -->
     <!---->
-    <table tableName="cms_article" domainObjectName="Article" ></table>
+    <!--<table tableName="cms_article" domainObjectName="Article" ></table>
     <table tableName="cms_category" domainObjectName="Category" ></table>
     <table tableName="cms_comment" domainObjectName="Comment" ></table>
     <table tableName="cms_logs" domainObjectName="Log" ></table>
     <table tableName="cms_privilege" domainObjectName="Privilege" ></table>
-    <table tableName="cms_role" domainObjectName="Role" ></table>
+    <table tableName="cms_role" domainObjectName="Role" ></table>-->
     <table tableName="cms_user" domainObjectName="User" ></table>
     <!--<table tableName="cms_role_privilege" domainObjectName="OrderLine" ></table>-->
     <!--<table tableName="cms_user_role" domainObjectName="BaseFile" ></table>-->

@@ -5,7 +5,7 @@
     <!--查看所有评论以及评论的回复-->
     <resultMap id="CommentWithCommentResultMap" type="com.briup.apps.cms.bean.extend.CommentExtend"
                extends="com.briup.apps.cms.dao.CommentMapper.ResultMapWithBLOBs">
-      <association property="user" resultMap="com.briup.apps.cms.dao.UserMapper.BaseResultMap"></association>
+      <association property="userExtend" resultMap="com.briup.apps.cms.dao.UserMapper.BaseResultMap"></association>
       <collection property="commentExtends" resultMap="CommentWithCommentResultMap"></collection>
     </resultMap>
 

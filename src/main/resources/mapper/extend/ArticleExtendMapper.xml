@@ -5,8 +5,8 @@
     <!--级联查询：查看文章以及所属栏目-->
     <resultMap id="ArticleWithCategoryResult" type="com.briup.apps.cms.bean.extend.ArticleExtend"
                extends="com.briup.apps.cms.dao.ArticleMapper.ResultMapWithBLOBs">
-        <association property="author" resultMap="com.briup.apps.cms.dao.UserMapper.BaseResultMap"></association>
-      <association property="category" resultMap="com.briup.apps.cms.dao.CategoryMapper.BaseResultMap"></association>
+      <association property="author" resultMap="com.briup.apps.cms.dao.UserMapper.BaseResultMap"></association>
+      <association property="category" resultMap="com.briup.apps.cms.dao.extend.CategoryExtendMapper.CategoryExtendsResultMap"></association>
     </resultMap>
 
     <!--查询文章以及文章的栏目信息和多条评论-->
@@ -34,7 +34,7 @@
     <!--没有栏目的文章-->
     <select id="selectAllArticle" resultMap="ArticleWithCategoryResult">
     select
-        art.id,art.title,art.content,art.source,art.publish_time,art.thumb_up,art.thumb_down,
+        art.id,art.title,art.content,art.source,art.publish_time,art.thumb_up,art.thumb_down,art.author_id,art.category_id,
         cat.name,cat.description,cat.no,
         user.username
     from
@@ -49,7 +49,7 @@
     <select id="selectArtiacleWithCateGoryAndCommentByID" parameterType="long"
             resultMap="ArticleWithCategoryAndCommentResult">
       select
-        art.title,art.content,art.source,art.publish_time,art.thumb_up,art.thumb_down,
+        art.title,art.content,art.source,art.publish_time,art.thumb_up,art.thumb_down,art.author_id,art.category_id,art.comment_id
         cat.name,cat.description,cat.no,
         aut.username,
         com.content,com.comment_time,ucom.username

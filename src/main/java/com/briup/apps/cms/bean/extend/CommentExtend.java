@@ -1,20 +1,31 @@
 package com.briup.apps.cms.bean.extend;
 
+import com.briup.apps.cms.bean.Article;
 import com.briup.apps.cms.bean.Comment;
 import com.briup.apps.cms.bean.User;
 
 import java.util.List;
 
 public class CommentExtend extends Comment {
-    private User user;
+
+    private UserExtend userExtend;
+    private Article article;
     private List<CommentExtend> commentExtends;
 
-    public User getUser() {
-        return user;
+    public UserExtend getUserExtend() {
+        return userExtend;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserExtend(UserExtend userExtend) {
+        this.userExtend = userExtend;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
     public List<CommentExtend> getCommentExtends() {
