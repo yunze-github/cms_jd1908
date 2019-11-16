@@ -19,10 +19,8 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("article")
-public class IArticleController {
+public class ArticleController {
 
-    @Autowired
-    private Article article;
 
     @Autowired
     private IArticleService iArticleService;
@@ -67,6 +65,7 @@ public class IArticleController {
             @ApiParam(value = "添加博客作者ID", required = true) Long authorId,
             @ApiParam(value = "博客属于哪个栏目", required = true) Long categoryId
     ) {
+        Article article = new Article();
         article.setTitle(title);
         article.setContent(content);
         article.setSource(source);

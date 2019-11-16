@@ -14,7 +14,7 @@
                extends="com.briup.apps.cms.dao.ArticleMapper.ResultMapWithBLOBs">
       <association property="category" resultMap="com.briup.apps.cms.dao.CategoryMapper.BaseResultMap"></association>
       <association property="author" resultMap="com.briup.apps.cms.dao.UserMapper.BaseResultMap"></association>
-      <collection property="commentExtends" resultMap="com.briup.apps.cms.dao.extend.CommentExtendMapper.CommentWithCommentResultMap"></collection>
+      <collection property="commentExtends" resultMap="com.briup.apps.cms.dao.extend.CommentExtendMapper.CommentWithUserResultMap"></collection>
     </resultMap>
 
     <!--查询-->

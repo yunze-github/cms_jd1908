@@ -18,7 +18,7 @@
     delete from cms_category
     <if test="categoryIds != null">
       <where>
-        id IN
+        id in
         <foreach item="categoryId" collection="categoryIds" open="(" separator="," close=")">
           #{categoryId}
         </foreach>

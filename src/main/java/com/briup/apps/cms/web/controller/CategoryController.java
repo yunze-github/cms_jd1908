@@ -17,7 +17,7 @@ import java.util.Arrays;
 
 @RestController
 @RequestMapping("category")
-public class ICategoryController {
+public class CategoryController {
 
     @Autowired
     private ICategoryService categoryService;

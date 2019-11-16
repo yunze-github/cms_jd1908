@@ -25,7 +25,7 @@ import java.util.Date;
 @RestController
 @Validated
 @RequestMapping("user")
-public class IUserController {
+public class UserController {
 
     /*
     用户查询
@@ -56,7 +56,6 @@ public class IUserController {
     })
     @PostMapping("/login")
     public Message login(String username, String password) {
-        System.out.println(user.getUsername() + ":" + user.getPassword());
         userService.checkLogin(username, password);
         return MessageUtil.success("用户登录成功!");
     }
@@ -64,8 +63,6 @@ public class IUserController {
     /*
     用户信息注册/修改
      */
-    @Autowired
-    private User user;
 
     @ApiOperation("用户注册!")
     @ApiImplicitParams({
@@ -79,6 +76,7 @@ public class IUserController {
     })
     @PostMapping("/register")
     public Message save(@NotNull String username, @NotNull String password, @NotNull String telephone, @NotNull String realname, @NotNull String gender, @NotNull Long birth, @NotNull String userFace) {
+        User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setTelephone(telephone);
@@ -103,6 +101,7 @@ public class IUserController {
     })
     @PostMapping("/alter")
     public Message update(@NotNull Long id,@NotNull String username, @NotNull String password, @NotNull String telephone, @NotNull String realname, @NotNull String gender, @NotNull Long birth, @NotNull String userFace) {
+        User user = new User();
         user.setId(id);
         user.setUsername(username);
         user.setPassword(password);
