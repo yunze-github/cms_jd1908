@@ -3,12 +3,21 @@
 <mapper namespace="com.briup.apps.cms.dao.extend.UserExtendMapper">
 
     <!--关联-->
-    <resultMap id="UserExtendResultMap" type="com.briup.apps.cms.bean.extend.UserExtend" extends="com.briup.apps.cms.dao.UserMapper.BaseResultMap">
+    <resultMap id="UserExtendResulpMapWithRoles" type="com.briup.apps.cms.bean.extend.UserExtend" extends="com.briup.apps.cms.dao.UserMapper.BaseResultMap">
+        <collection property="roleExtends" resultMap="com.briup.apps.cms.dao.extend.RoleExtendMapper.RoleExtendResultMap"></collection>
     </resultMap>
 
-    <select id="selectAllUsers" resultMap="com.briup.apps.cms.dao.UserMapper.BaseResultMap">
-        select *
-        from cms_user
+    <select id="selectUserWithRoles" parameterType="long" resultMap="UserExtendResulpMapWithRoles">
+        select
+            user.id,user.username,role.id,role.name,pri.id,pri.name,pri.description,pri.route,pri.type,  pri.icon
+        from
+            cms_user user,cms_role role,cms_privilege pri,cms_role_privilege crp,cms_user_role cur
+        where
+            user.id = #{id}
+            and user.id = cur.user_id
+            and cur.role_id = role.id
+            and role.id = crp.role_id
+            and crp.privilege_id = pri.id
     </select>
 
 

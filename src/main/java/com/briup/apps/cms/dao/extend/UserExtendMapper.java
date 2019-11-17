@@ -1,6 +1,8 @@
 package com.briup.apps.cms.dao.extend;
 
 import com.briup.apps.cms.bean.User;
+import com.briup.apps.cms.bean.extend.RoleExtend;
+import com.briup.apps.cms.bean.extend.UserExtend;
 
 import java.util.List;
 
@@ -12,5 +14,5 @@ import java.util.List;
  * @date : 2019-11-14 22:26
  **/
 public interface UserExtendMapper {
-    List<User> selectAllUsers();
+    List<UserExtend> selectUserWithRoles(Long id);
 }

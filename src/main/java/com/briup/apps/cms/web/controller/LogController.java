@@ -35,7 +35,8 @@ public class LogController {
     @ApiOperation("用户操作日志记录查询")
     @GetMapping("/findOne")
     public Message findLogs(Long userId) {
-        return MessageUtil.success("查询日志成功!",logService.findLogsByUserId(userId));
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_QUERY_ALL,
+                MessageUtil.STATUS_SUCCESS_QUERY_ALL,logService.findLogsByUserId(userId));
     }
 
     /*
@@ -58,11 +59,11 @@ public class LogController {
         log.setUserId(userId);
         if (id==null){
             logService.saveOrUpdate(log);
-            return MessageUtil.success("日志添加成功!");
+            return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_SAVE,MessageUtil.STATUS_SUCCESS_SAVE);
         }else {
             log.setId(id);
             logService.saveOrUpdate(log);
-            return MessageUtil.success("日志修改成功!");
+            return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_UPDATE,MessageUtil.STATUS_SUCCESS_UPDATE);
         }
     }
 
@@ -76,6 +77,6 @@ public class LogController {
     @PostMapping("/drop")
     public Message drop(@NotNull @RequestBody Long[] ids) {
         logService.dropLogs(ids);
-        return MessageUtil.success("日志删除成功!");
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_DELETE_ALL,MessageUtil.STATUS_SUCCESS_DELETE_ALL);
     }
 }

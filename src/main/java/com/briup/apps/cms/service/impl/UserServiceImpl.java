@@ -1,7 +1,9 @@
 package com.briup.apps.cms.service.impl;
 
+import com.briup.apps.cms.bean.Role;
 import com.briup.apps.cms.bean.User;
 import com.briup.apps.cms.bean.UserExample;
+import com.briup.apps.cms.bean.extend.UserExtend;
 import com.briup.apps.cms.dao.UserMapper;
 import com.briup.apps.cms.dao.extend.UserExtendMapper;
 import com.briup.apps.cms.exception.CustomerException;
@@ -29,8 +31,9 @@ public class UserServiceImpl implements IUserService {
 
     //查找所有用户
     @Override
-    public List<User> findAllUsers() {
-        return userExtendMapper.selectAllUsers();
+    public List<User> findAll() {
+        UserExample userExample = new UserExample();
+        return userMapper.selectByExample(userExample);
     }
 
     //检测姓名是否在数据库中
@@ -78,8 +81,31 @@ public class UserServiceImpl implements IUserService {
         userExample.createCriteria().andUsernameEqualTo(user.getUsername()).andPasswordEqualTo(user.getPassword());
         List<User> list = userMapper.selectByExample(userExample);
         if (list.size()==0){
-            throw new CustomerException("无法修该用户信息!");
+            throw new CustomerException("该用户信息不存在!");
         }
         userMapper.updateByExample(user,userExample);
+    }
+
+
+    //删除用户
+    @Override
+    public void drop(Long id) throws CustomerException {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andIdEqualTo(id);
+        List list = userMapper.selectByExample(userExample);
+        if (list.size()==0){
+            throw new CustomerException("用户信息不存在");
+        }
+        userMapper.deleteByExample(userExample);
+    }
+
+    //通过用户id查询用户角色信息
+    @Override
+    public List<UserExtend> findRoles(Long id) {
+        List<UserExtend> list = userExtendMapper.selectUserWithRoles(id);
+        if (list.size()==0) {
+            throw new CustomerException("该用户没有指定角色权限!");
+        }
+        return list;
     }
 }

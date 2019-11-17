@@ -35,8 +35,9 @@ public class UserController {
 
     @ApiOperation("查询所有用户信息!")
     @GetMapping("/findAll")
-    public Message findAllUsers() {
-        return MessageUtil.success("查询成功!", userService.findAllUsers());
+    public Message findAll() {
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_QUERY_ALL,
+                MessageUtil.STATUS_SUCCESS_QUERY_ALL, userService.findAll());
     }
 
     /*
@@ -46,7 +47,7 @@ public class UserController {
     @PostMapping("/checkName")
     public Message cheackName(String username) {
         userService.checkName(username);
-        return MessageUtil.success("检测姓名成功!");
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_CHECK_NAME,MessageUtil.STATUS_SUCCESS_CHECK_NAME);
     }
 
     @ApiOperation("检查用户登录信息")
@@ -57,7 +58,7 @@ public class UserController {
     @PostMapping("/login")
     public Message login(String username, String password) {
         userService.checkLogin(username, password);
-        return MessageUtil.success("用户登录成功!");
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_CHECK_PASS,MessageUtil.STATUS_SUCCESS_CHECK_PASS);
     }
 
     /*
@@ -85,7 +86,7 @@ public class UserController {
         user.setBirth(birth);
         user.setUserFace(userFace);
         userService.save(user);
-        return MessageUtil.success("注册成功!");
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_USER_REGISTER,MessageUtil.STATUS_SUCCESS_USER_REGISTER);
     }
 
     @ApiOperation("用户信息修改!")
@@ -111,7 +112,33 @@ public class UserController {
         user.setBirth(birth);
         user.setUserFace(userFace);
         userService.update(user);
-        return MessageUtil.success("修改用户信息成功!");
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_USER_ALTER,MessageUtil.STATUS_SUCCESS_USER_ALTER);
     }
 
+    /*
+    用户注销
+     */
+    @ApiOperation("用户注销")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query",dataType = "Long",required = true,name = "id",value = "用户ID"),
+    })
+    @GetMapping("/drop")
+    public Message drop(@NotNull Long id) {
+        userService.drop(id);
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_DELETE_ALL,MessageUtil.STATUS_SUCCESS_DELETE_ALL);
+    }
+
+    /*
+    用户角色
+     */
+    @ApiOperation("用户角色查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query",dataType = "Long",required = true,name = "id",value = "用户ID")
+    })
+    @GetMapping("/userRoles")
+    public Message findRoles(@NotNull Long id) {
+
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_QUERY_ONE,
+                MessageUtil.STATUS_SUCCESS_QUERY_ONE,userService.findRoles(id));
+    }
 }

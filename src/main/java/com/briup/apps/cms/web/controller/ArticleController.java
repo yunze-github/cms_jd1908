@@ -31,7 +31,8 @@ public class ArticleController {
     @ApiOperation(value = "所有博客")
     @GetMapping("/findAll")
     public Message findAll() {
-        return MessageUtil.success("查询成功!", iArticleService.findAllArticle());
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_QUERY_ALL,
+                MessageUtil.STATUS_SUCCESS_QUERY_ALL, iArticleService.findAllArticle());
     }
 
     @ApiOperation(value = "栏目博客")
@@ -40,7 +41,8 @@ public class ArticleController {
             @ApiParam(value = "查询栏目下面的博客", required = true)
             @NotNull @RequestParam(value = "categoryId") Long categoryId
     ) {
-        return MessageUtil.success("查询成功!", iArticleService.findAllArticleInCategoryByCategoryId(categoryId));
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_QUERY_ALL,
+                MessageUtil.STATUS_SUCCESS_QUERY_ALL ,iArticleService.findAllArticleInCategoryByCategoryId(categoryId));
     }
 
     @ApiOperation(value = "详看博客")
@@ -48,7 +50,8 @@ public class ArticleController {
     public Message findOneByID(
             @ApiParam(value = "根据博客ID详看博客", required = true)
             @NotNull @RequestParam(value = "articleId") Long id) {
-        return MessageUtil.success("查询成功!", iArticleService.findArtiacleInCateGoryWithCommentByID(id));
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_QUERY_ONE,
+                MessageUtil.STATUS_SUCCESS_QUERY_ONE, iArticleService.findArtiacleInCateGoryWithCommentByID(id));
     }
 
 
@@ -74,16 +77,16 @@ public class ArticleController {
         iArticleService.saveOrUpdate(article);
         if (id != null) {
             article.setId(id);
-            return MessageUtil.success("保存成功!");
+            return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_SAVE,MessageUtil.STATUS_SUCCESS_SAVE);
         }
-        return MessageUtil.success("更新成功!");
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_UPDATE,MessageUtil.STATUS_SUCCESS_UPDATE);
     }
 
     @ApiOperation(value = "删除博客")
     @GetMapping("/dropOne")
     public Message dropOne(@ApiParam(name = "id", value = "根据博客ID删除博客", required = true) @RequestParam("id") Long id) {
         iArticleService.dropOne(id);
-        return MessageUtil.success("删除成功!");
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_DELETE_ONE,MessageUtil.STATUS_SUCCESS_DELETE_ONE);
     }
 
 }

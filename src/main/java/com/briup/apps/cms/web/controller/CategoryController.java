@@ -25,7 +25,8 @@ public class CategoryController {
     @GetMapping("/findAll")
     @ApiOperation(value = "所有栏目",notes = "查找所有的栏目信息")
     public Message findAll() {
-        return MessageUtil.success("查询成功!",categoryService.findAllCategorys());
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_QUERY_ALL,
+                MessageUtil.STATUS_SUCCESS_QUERY_ALL,categoryService.findAllCategorys());
     }
 
     @PostMapping("/saveOrUpdate")
@@ -33,9 +34,10 @@ public class CategoryController {
     public Message saveOrUpdate(Category category){
         categoryService.saveOrUpdate(category);
         if (category.getId()!=null) {
-            return MessageUtil.success("更新成功!");
+            return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_UPDATE,
+                    MessageUtil.STATUS_SUCCESS_UPDATE);
         }else {
-            return MessageUtil.success("保存成功!");
+            return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_SAVE,MessageUtil.STATUS_SUCCESS_SAVE);
         }
     }
 
@@ -46,7 +48,7 @@ public class CategoryController {
     )
     public Message dropOne(Long id) {
         categoryService.dropCategory(id);
-        return MessageUtil.success("删除成功!");
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_DELETE_ONE,MessageUtil.STATUS_SUCCESS_DELETE_ONE);
     }
 
     @PostMapping("/dropSome")
@@ -56,6 +58,6 @@ public class CategoryController {
     )
     public Message dropSome(@RequestBody Long[] ids) {
         categoryService.dropCategorys(ids);
-        return MessageUtil.success("删除成功!");
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_DELETE_ALL,MessageUtil.STATUS_SUCCESS_DELETE_ALL);
     }
 }

@@ -51,7 +51,7 @@ public class CommentController {
             comment.setParentId(parentId);
         }
         commentService.save(comment);
-        return MessageUtil.success("评论添加成功!");
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_SAVE,MessageUtil.STATUS_SUCCESS_SAVE);
     }
 
     /*
@@ -64,6 +64,6 @@ public class CommentController {
     @GetMapping("/drop")
     public Message drop(@NotNull @RequestBody Long[] ids) {
         commentService.dropComments(ids);
-        return MessageUtil.success("评论删除成功!");
+        return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_DELETE_ALL,MessageUtil.STATUS_SUCCESS_DELETE_ALL);
     }
 }
