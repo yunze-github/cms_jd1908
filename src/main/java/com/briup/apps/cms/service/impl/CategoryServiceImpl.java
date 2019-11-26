@@ -2,66 +2,63 @@ package com.briup.apps.cms.service.impl;
 
 import com.briup.apps.cms.bean.Category;
 import com.briup.apps.cms.bean.CategoryExample;
-import com.briup.apps.cms.bean.extend.CategoryExtend;
 import com.briup.apps.cms.dao.CategoryMapper;
-import com.briup.apps.cms.dao.extend.CategoryExtendMapper;
-import com.briup.apps.cms.exception.CustomerException;
 import com.briup.apps.cms.service.ICategoryService;
-import org.apache.el.stream.Stream;
+import com.briup.apps.cms.utils.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * <h3>cms_jd1908</h3>
- * <p>栏目接口实现类</p>
- *
- * @author : yunze
- * @date : 2019-11-14 14:28
+ * @program: cms_jd1911
+ * @description: 栏目业务实现类
+ * @author: charles
+ * @create: 2019-11-14 15:04
  **/
-
 @Service
 public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
-    @Autowired
-    private CategoryExtendMapper categoryExtendMapper;
 
     @Override
-    public List<Category> findAllCategorys() {
-        return categoryExtendMapper.selectAllCategorys();
+    public List<Category> findAll() {
+        return categoryMapper.selectByExample(new CategoryExample());
     }
 
     @Override
     public void saveOrUpdate(Category category) throws CustomerException {
-        if (category.getId()!=null) {
+        if(category.getId() != null){
             categoryMapper.updateByPrimaryKey(category);
-        }else {
-            CategoryExample categoryExample = new CategoryExample();
-            categoryExample.createCriteria().andNameEqualTo(category.getName());
-            List<Category> list = categoryMapper.selectByExample(categoryExample);
-            if (list.size()>0) {
-                throw new CustomerException("栏目标题重复!");
+        } else {
+            //判断是否重名
+            CategoryExample example = new CategoryExample();
+            example.createCriteria().andNameEqualTo(category.getName());
+            List<Category> list = categoryMapper.selectByExample(example);
+            if(list.size()>0){
+                throw new CustomerException("该栏目已经存在");
             }
             categoryMapper.insert(category);
         }
     }
 
     @Override
-    public void dropCategory(Long categoryId) throws CustomerException {
-        if (categoryMapper.selectByPrimaryKey(categoryId)==null) {
-            throw new CustomerException("栏目不存在!");
+    @Transactional
+    public void deleteById(long id) throws CustomerException {
+        Category category = categoryMapper.selectByPrimaryKey(id);
+        if(category == null){
+            throw new CustomerException("要删除的栏目不存在");
         }
-        categoryMapper.deleteByPrimaryKey(categoryId);
+        categoryMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    public void dropCategorys(Long[] categoryIds) throws CustomerException {
-        categoryExtendMapper.deleteCategoryIds(categoryIds);
+    @Transactional
+    public void batchDelete(long[] ids) throws CustomerException {
+        for(long id : ids){
+            this.deleteById(id);
+        }
     }
 }

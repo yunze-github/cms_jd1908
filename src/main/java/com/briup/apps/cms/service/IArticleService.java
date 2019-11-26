@@ -2,25 +2,29 @@ package com.briup.apps.cms.service;
 
 import com.briup.apps.cms.bean.Article;
 import com.briup.apps.cms.bean.extend.ArticleExtend;
-import com.briup.apps.cms.exception.CustomerException;
-import com.briup.apps.cms.utils.Message;
+import com.briup.apps.cms.utils.CustomerException;
 
 import java.util.List;
-
+/** 
+ * @Description:  
+ * @Param:  
+ * @return:  
+ * @Author: charles 
+ * @Date: 2019-11-12 
+ */ 
 public interface IArticleService {
+    /** 
+     * @Description:
+     * @Param: [] 
+     * @return: java.util.List<com.briup.apps.cms.bean.Article> 
+     * @Author: charles 
+     * @Date: 2019-11-12 
+     */ 
+    List<Article> findAll();
 
-//级联
-    List<ArticleExtend> findAllArticleInCategoryByCategoryId(long categoryId);
+    List<ArticleExtend> cascadeFindAll();
 
-    List<ArticleExtend> findAllArticle();
+    ArticleExtend findById(long id);
 
-    ArticleExtend findArtiacleInCateGoryWithCommentByID(long articleId);
-
-    //根据articleId删除一篇文章
-    void dropOne(Long articleId);
-
-//单表
-
-    //添加文章
     void saveOrUpdate(Article article) throws CustomerException;
 }

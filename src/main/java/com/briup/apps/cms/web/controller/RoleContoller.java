@@ -83,4 +83,8 @@ public class RoleContoller {
         return MessageUtil.success(MessageUtil.MESSAGE_SUCCESS_DELETE_ALL,MessageUtil.STATUS_SUCCESS_DELETE_ALL);
     }
 
+    /*
+    权限绑定角色
+     */
+
 }

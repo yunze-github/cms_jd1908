@@ -9,12 +9,14 @@
 
 package com.briup.apps.cms.config;
 
+import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.ApiKey;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -39,16 +41,20 @@ public class Swagger2 {
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.briup.apps.cms.web.controller"))
 				.paths(PathSelectors.any())
-				.build();
+				.build()
+				.securitySchemes(Lists.newArrayList(apiKey()));
 	}
 	
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-				.title("咨询管理云平台")
-				.description("昆山杰普软件科技有限公司，http://www.briup.com")
-				.termsOfServiceUrl("http://www.briup.com")
+				.title("博客咨询平台")
+				.description("貟泽的GitHub，https://github.com/yunze-github")
+				.termsOfServiceUrl("https://github.com/yunze-github")
 				.version("1.0")
 				.build();
+	}
+	private ApiKey apiKey() {
+		return new ApiKey("Authorization", "Authorization", "header");
 	}
 }
 
